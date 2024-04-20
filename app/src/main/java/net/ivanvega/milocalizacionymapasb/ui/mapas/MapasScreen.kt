@@ -42,7 +42,7 @@ import com.google.maps.android.compose.streetview.StreetView
 import com.google.maps.android.ktx.MapsExperimentalFeature
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
-/*
+
 @Composable
 fun GenerarMapasP1(){
     var mapProperties by remember { mutableStateOf(MapProperties(maxZoomPreference = 10f, minZoomPreference = 5f)) }
@@ -56,8 +56,7 @@ fun GenerarMapasP1(){
             }) { Text(text = "Toggle mapToolbarEnabled")}
         }
     }
-}*/
-/*
+}
 @Composable
 fun GenerarMapasP2(){
     val singapore = LatLng(20.13940326357506, -101.15073142883558)
@@ -69,8 +68,7 @@ fun GenerarMapasP2(){
             Marker(state = MarkerState(position = singapore),title = "Itsur",snippet = "Una universidad de prestigio")
         }
     }
-}*/
-
+}
 @Composable
 fun ControlarCamara(){
     val singapore = LatLng(20.13940326357506, -101.15073142883558)
@@ -97,7 +95,6 @@ fun DibujarMapas(){
         )
     }
 }
-
 @Composable
 fun RecomponerElementos(){
     val singapore = LatLng(20.13940326357506, -101.15073142883558)
