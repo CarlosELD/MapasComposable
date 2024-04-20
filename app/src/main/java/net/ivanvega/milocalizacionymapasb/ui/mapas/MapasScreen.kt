@@ -83,7 +83,7 @@ fun ControlarCamara(){
         }) { Text(text = "Zoom In")}
     }
 }*/
-/*
+
 @Composable
 fun DibujarMapas(){
     GoogleMap(
@@ -97,7 +97,7 @@ fun DibujarMapas(){
             title = "Los Azufres michoacan"
         )
     }
-}*/
+}
 
 @Composable
 fun RecomponerElementos(){
