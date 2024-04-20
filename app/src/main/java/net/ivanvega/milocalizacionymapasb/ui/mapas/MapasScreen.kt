@@ -70,7 +70,7 @@ fun GenerarMapasP2(){
         }
     }
 }*/
-/*
+
 @Composable
 fun ControlarCamara(){
     val singapore = LatLng(20.13940326357506, -101.15073142883558)
@@ -82,8 +82,7 @@ fun ControlarCamara(){
             cameraPositionState.move(CameraUpdateFactory.zoomIn())
         }) { Text(text = "Zoom In")}
     }
-}*/
-
+}
 @Composable
 fun DibujarMapas(){
     GoogleMap(
@@ -130,7 +129,7 @@ fun Experimental(){
         }
     }
 }
-/*
+
 @Composable
 fun MiPrimerMapaGoogle() {
     val singapore = LatLng(19.42709, -99.16765)
@@ -157,7 +156,7 @@ fun MiPrimerMapaGoogle() {
         )
     }
 }
-*/
+
 @OptIn(MapsExperimentalFeature::class)
 @Composable
 fun MiPrimerMapaC1() {
