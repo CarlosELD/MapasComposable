@@ -42,30 +42,58 @@ import com.google.maps.android.compose.streetview.StreetView
 import com.google.maps.android.ktx.MapsExperimentalFeature
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
-
 @Composable
 fun GenerarMapasP1(){
-    var mapProperties by remember { mutableStateOf(MapProperties(maxZoomPreference = 10f, minZoomPreference = 5f)) }
-    var mapUiSettings by remember { mutableStateOf(MapUiSettings(mapToolbarEnabled = false))}
+    var mapProperties by remember {
+        mutableStateOf(
+            MapProperties(maxZoomPreference = 10f, minZoomPreference = 5f)
+        )
+    }
+    var mapUiSettings by remember {
+        mutableStateOf(
+            MapUiSettings(mapToolbarEnabled = false)
+        )
+    }
     Box(Modifier.fillMaxSize()) {
         GoogleMap(properties = mapProperties, uiSettings = mapUiSettings)
         Column {
-            Button(onClick = { mapProperties = mapProperties.copy(isBuildingEnabled = !mapProperties.isBuildingEnabled)
-            }) { Text(text = "Toggle isBuildingEnabled") }
-            Button(onClick = { mapUiSettings = mapUiSettings.copy(mapToolbarEnabled = !mapUiSettings.mapToolbarEnabled)
-            }) { Text(text = "Toggle mapToolbarEnabled")}
+            Button(onClick = {
+                mapProperties = mapProperties.copy(
+                    isBuildingEnabled = !mapProperties.isBuildingEnabled
+                )
+            }) {
+                Text(text = "Toggle isBuildingEnabled")
+            }
+            Button(onClick = {
+                mapUiSettings = mapUiSettings.copy(
+                    mapToolbarEnabled = !mapUiSettings.mapToolbarEnabled
+                )
+            }) {
+                Text(text = "Toggle mapToolbarEnabled")
+            }
         }
     }
 }
 @Composable
 fun GenerarMapasP2(){
     val singapore = LatLng(20.13940326357506, -101.15073142883558)
-    val cameraPositionState = rememberCameraPositionState { position = CameraPosition.fromLatLngZoom(singapore, 10f)}
-    val mapProperties by remember {mutableStateOf(MapProperties(maxZoomPreference = 10f, minZoomPreference = 3f)) }
-    val mapUiSettings by remember {mutableStateOf(MapUiSettings(mapToolbarEnabled = false))}
+    val cameraPositionState = rememberCameraPositionState {position = CameraPosition.fromLatLngZoom(singapore, 10f)}
+    val mapProperties by remember { mutableStateOf(MapProperties(maxZoomPreference = 10f, minZoomPreference = 3f)) }
+    val mapUiSettings by remember {
+        mutableStateOf(
+            MapUiSettings(mapToolbarEnabled = false)
+        )
+    }
     Box(Modifier.fillMaxSize()) {
-        GoogleMap(properties = mapProperties, uiSettings = mapUiSettings, cameraPositionState = cameraPositionState) {
-            Marker(state = MarkerState(position = singapore),title = "Itsur",snippet = "Una universidad de prestigio")
+        GoogleMap(
+            properties = mapProperties,
+            uiSettings = mapUiSettings,
+            cameraPositionState = cameraPositionState
+        ) {Marker(
+                state = MarkerState(position = singapore),
+                title = "Itsur",
+                snippet = "Una universidad de prestigio"
+            )
         }
     }
 }
@@ -85,23 +113,18 @@ fun ControlarCamara(){
 fun DibujarMapas(){
     GoogleMap(
         googleMapOptionsFactory = {GoogleMapOptions().mapId("DEMO_MAP_ID")}) {
-        AdvancedMarker(
-            state = MarkerState(position = LatLng(19.702443183103323, -101.19232923360192)),
-            title = "Catedral de Morelia"
-        )
-        AdvancedMarker(
-            state = MarkerState(position = LatLng(19.782144034817463, -100.65724525970312)),
-            title = "Los Azufres michoacan"
-        )
+        AdvancedMarker(state = MarkerState(position = LatLng(19.702443183103323, -101.19232923360192)),
+            title = "Catedral de Morelia")
+        AdvancedMarker(state = MarkerState(position = LatLng(19.782144034817463, -100.65724525970312)),
+            title = "Los Azufres michoacan")
     }
 }
 @Composable
 fun RecomponerElementos(){
     val singapore = LatLng(20.13940326357506, -101.15073142883558)
     val markerState = rememberMarkerState(position = singapore)
-    GoogleMap(googleMapOptionsFactory = { GoogleMapOptions().mapId("DEMO_MAP_ID")}){
-        AdvancedMarker(
-            state = MarkerState(position = LatLng(19.702443183103323, -101.19232923360192)),
+    GoogleMap(googleMapOptionsFactory = {GoogleMapOptions().mapId("DEMO_MAP_ID") }) {
+        AdvancedMarker(state = MarkerState(position = LatLng(19.702443183103323, -101.19232923360192)),
             title = "Catedral de Morelia"
         )
     }
@@ -113,14 +136,12 @@ fun RecomponerElementos(){
         }
     }
 }
-
 @OptIn(MapsComposeExperimentalApi::class)
 @Composable
 fun Experimental(){
     GoogleMap(
         googleMapOptionsFactory = {GoogleMapOptions().mapId("DEMO_MAP_ID")}) {
-        MapEffect{ map ->
-            val morelia = LatLng(19.702443183103323, -101.19232923360192)
+        MapEffect{ map -> val morelia = LatLng(19.702443183103323, -101.19232923360192)
             map.moveCamera(CameraUpdateFactory.newLatLng(morelia))
             map.addMarker(MarkerOptions().position(morelia).title("Catedral de Morelia"))
         }
@@ -130,48 +151,40 @@ fun Experimental(){
 @Composable
 fun MiPrimerMapaGoogle() {
     val singapore = LatLng(19.42709, -99.16765)
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(singapore, 10f)
-    }
+    val cameraPositionState = rememberCameraPositionState {position = CameraPosition.fromLatLngZoom(singapore, 10f)}
     var uiSettings by remember { mutableStateOf(MapUiSettings()) }
-    val properties by remember { mutableStateOf(MapProperties(mapType = MapType.SATELLITE)) }
+    var properties by remember { mutableStateOf(MapProperties(mapType = MapType.SATELLITE)) }
     Box(Modifier.fillMaxSize()) {
         GoogleMap(
             modifier = Modifier.matchParentSize(),
             properties = properties,
             uiSettings = uiSettings,
-            cameraPositionState = cameraPositionState) {
-            Marker(
+            cameraPositionState = cameraPositionState
+        ) {Marker(
                 state = MarkerState(position = singapore),
                 title = "Itsur",
-                snippet = "Una escuela prestigiosa"
-            )
+                snippet = "Una escuela prestigiosa")
         }
         Switch(
             checked = uiSettings.zoomControlsEnabled,
-            onCheckedChange = { uiSettings = uiSettings.copy(zoomControlsEnabled = it)}
+            onCheckedChange = {
+                uiSettings = uiSettings.copy(zoomControlsEnabled = it)
+            }
         )
     }
 }
-
 @OptIn(MapsExperimentalFeature::class)
 @Composable
 fun MiPrimerMapaC1() {
     val singapore = LatLng(20.13940326357506, -101.15073142883558)
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(singapore, 10f)
-    }
+    val cameraPositionState = rememberCameraPositionState {position = CameraPosition.fromLatLngZoom(singapore, 10f) }
     Box(Modifier.fillMaxSize()) {
-        Column {
-            StreetView(
-                streetViewPanoramaOptionsFactory = {
-                    StreetViewPanoramaOptions().position(singapore)
-                },
-                modifier = Modifier.fillMaxWidth().height(200.dp))
+        Column { StreetView(streetViewPanoramaOptionsFactory = {
+                    StreetViewPanoramaOptions().position(singapore)},
+                modifier = Modifier.fillMaxWidth().height(200.dp)
+            )
             Spacer(modifier = Modifier.height(16.dp)) // Espacio adicional entre el StreetView y el botón
-            Button(onClick = { /* Acción al hacer clic */ }) {
-                Text(text = "Botón")
-            }
+            Button(onClick = { /* Acción al hacer clic */ }) { Text(text = "Botón") }
             Text(text = "Información adicional")
         }
     }

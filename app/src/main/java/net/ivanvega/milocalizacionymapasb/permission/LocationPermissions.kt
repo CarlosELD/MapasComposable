@@ -1,3 +1,19 @@
+/*
+ * Copyright 2023 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.example.platform.location.permission
 
 import androidx.compose.foundation.background
@@ -35,8 +51,15 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun LocationPermissions(text: String, rationale: String, locationState: PermissionState) {
-    LocationPermissions(text = text, rationale = rationale,
-        locationState = rememberMultiplePermissionsState(permissions = listOf(locationState.permission)))
+    LocationPermissions(
+        text = text,
+        rationale = rationale,
+        locationState = rememberMultiplePermissionsState(
+            permissions = listOf(
+                locationState.permission
+            )
+        )
+    )
 }
 
 /**
@@ -45,16 +68,28 @@ fun LocationPermissions(text: String, rationale: String, locationState: Permissi
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun LocationPermissions(text: String, rationale: String, locationState: MultiplePermissionsState) {
-    var showRationale by remember(locationState) { mutableStateOf(false) }
-    if (showRationale) { PermissionRationaleDialog(rationaleState = RationaleState(
-            title = "Location Permission Access", rationale = rationale,
-            onRationaleReply = { proceed -> if (proceed){locationState.launchMultiplePermissionRequest()}
-                showRationale = false}))
+    var showRationale by remember(locationState) {
+        mutableStateOf(false)
+    }
+    if (showRationale) {
+        PermissionRationaleDialog(rationaleState = RationaleState(
+            title = "Location Permission Access",
+            rationale = rationale,
+            onRationaleReply = { proceed ->
+                if (proceed) {
+                    locationState.launchMultiplePermissionRequest()
+                }
+                showRationale = false
+            }
+        ))
     }
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         PermissionRequestButton(isGranted = false, title = text) {
-            if (locationState.shouldShowRationale) { showRationale = true } else
-            { locationState.launchMultiplePermissionRequest()}
+            if (locationState.shouldShowRationale) {
+                showRationale = true
+            } else {
+                locationState.launchMultiplePermissionRequest()
+            }
         }
     }
 }
@@ -64,12 +99,22 @@ fun LocationPermissions(text: String, rationale: String, locationState: Multiple
  */
 @Composable
 fun PermissionRequestButton(isGranted: Boolean, title: String, onClick: () -> Unit) {
-    if (isGranted){ Row(modifier = Modifier.fillMaxWidth().padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically){
+    if (isGranted) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Icon(Icons.Outlined.CheckCircle, title, modifier = Modifier.size(48.dp))
             Spacer(Modifier.size(10.dp))
-            Text(text = title, modifier = Modifier.background(Color.Transparent))}
-    } else {Button(onClick = onClick) { Text("Request $title")}}
+            Text(text = title, modifier = Modifier.background(Color.Transparent))
+        }
+    } else {
+        Button(onClick = onClick) {
+            Text("Request $title")
+        }
+    }
 }
 
 /**
@@ -78,11 +123,26 @@ fun PermissionRequestButton(isGranted: Boolean, title: String, onClick: () -> Un
 @Composable
 fun PermissionRationaleDialog(rationaleState: RationaleState) {
     AlertDialog(onDismissRequest = { rationaleState.onRationaleReply(false) }, title = {
-        Text(text = rationaleState.title) }, text = {
-        Text(text = rationaleState.rationale) }, confirmButton = {
-        TextButton(onClick = {rationaleState.onRationaleReply(true)}) { Text("Continue")}}, dismissButton = {
-        TextButton(onClick = {rationaleState.onRationaleReply(false)}) {Text("Dismiss")}
+        Text(text = rationaleState.title)
+    }, text = {
+        Text(text = rationaleState.rationale)
+    }, confirmButton = {
+        TextButton(onClick = {
+            rationaleState.onRationaleReply(true)
+        }) {
+            Text("Continue")
+        }
+    }, dismissButton = {
+        TextButton(onClick = {
+            rationaleState.onRationaleReply(false)
+        }) {
+            Text("Dismiss")
+        }
     })
 }
 
-data class RationaleState(val title: String,val rationale: String,val onRationaleReply: (proceed: Boolean) -> Unit)
+data class RationaleState(
+    val title: String,
+    val rationale: String,
+    val onRationaleReply: (proceed: Boolean) -> Unit,
+)
